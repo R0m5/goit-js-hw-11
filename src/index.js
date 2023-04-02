@@ -17,7 +17,7 @@ const refs = {
 
 const { form, input, gallery, loadMore } = refs;
 
-let myPage = 1;
+let page = 1;
 
 form.addEventListener('submit', onSubmit);
 loadMore.addEventListener('click', onLoadMoreBtn);
