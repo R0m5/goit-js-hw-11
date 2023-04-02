@@ -81,7 +81,7 @@ async function fetchThen(value) {
 async function onLoadMoreBtn() {
   const valueLoadBtn = input.value;
   let limitAdd;
-  page = +1;
+  page += 1;
   try {
     const resp = await fetchImage(valueLoadBtn, page, limitAdd);
     createMarkup(resp.data.hits, gallery);
