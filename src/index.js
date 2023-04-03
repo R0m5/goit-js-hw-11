@@ -50,7 +50,8 @@ async function fetchThen(value) {
   try {
     const resp = await fetchImage(value);
     const array = resp.data.hits;
-    const number = resp.data.total;
+    // const number = resp.data.total;
+    const number = resp.data.totalHits;
 
     if (array.length === 0) {
       Notiflix.Notify.failure(
@@ -80,15 +81,20 @@ async function fetchThen(value) {
 
 async function onLoadMoreBtn() {
   const valueLoadBtn = input.value;
-  let limitAdd;
+  let limitAdd = 40;
   page += 1;
   try {
     const resp = await fetchImage(valueLoadBtn, page, limitAdd);
-    createMarkup(resp.data.hits, gallery);
+    const hits = resp.data.hits;
+    const totalHits = resp.data.totalHits;
+    const maxIndex = (page - 1) * limitAdd + hits.length;
+
+    // createMarkup(resp.data.hits, gallery);
+    createMarkup(hits, gallery);
     onPageScrolling();
     lightbox.refresh();
 
-    if (resp.data.hits.length < limitAdd) {
+    if (maxIndex >= totalHits) {
       loadMore.hidden = true;
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
